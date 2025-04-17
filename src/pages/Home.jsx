@@ -8,7 +8,7 @@ import { fetchUsers, fetchMessages, sendMessage, fetchFriends, setSelectedUserId
 import io from "socket.io-client";
 import { addIncomingMessage } from "../redux/features/useChatSlice"
 import { getFriendRequests,accptFriendrReq,declineFriendrReq } from "../redux/features/friendRequestSlice"
-import MessageBox from '../components/messageBox';
+import MessageBox from '../components/MessageBox';
 import { sendFriendrReq } from '../redux/features/userSlice';
 
 
