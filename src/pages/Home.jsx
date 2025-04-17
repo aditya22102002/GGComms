@@ -12,7 +12,7 @@ import MessageBox from '../components/MessageBox';
 import { sendFriendrReq } from '../redux/features/userSlice';
 
 
-const socket = io("http://localhost:8000");
+const socket = io("https://ggcomms-backend.onrender.com");
 
 function Home() {
   const addFriendRef = useRef(null);
