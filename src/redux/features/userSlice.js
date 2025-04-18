@@ -9,6 +9,7 @@ export const getCurrentUser = createAsyncThunk('user/get', async (_, thunkAPI) =
     const response = await axios.get(`${API_URL}/api/v1/users/getUser`, { withCredentials: true });
     return response.data;
   } catch (error) {
+    console.log(error);
     return thunkAPI.rejectWithValue(error.response.data.message || 'Failed to get user');
   }
 });
