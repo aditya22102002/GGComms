@@ -88,7 +88,7 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state) => {
         state.loading = false;
         state.user = null;
-        localStorage.removeItem('user');
+        // localStorage.removeItem('user');
       });
   },
 });
