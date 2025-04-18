@@ -10,6 +10,8 @@ export const fetchUsers = createAsyncThunk("chat/fetchUsers", async (_, { reject
     const res = await axios.get(`${API_URL}/api/v1/message/users`);
     return res.data.data;
   } catch (err) {
+    console.log(err);
+    
     return rejectWithValue(err.response.data.message);
   }
 });
