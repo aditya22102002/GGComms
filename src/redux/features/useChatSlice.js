@@ -7,7 +7,7 @@ const API_URL = 'https://ggcomms-backend.onrender.com';
 
 export const fetchUsers = createAsyncThunk("chat/fetchUsers", async (_, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${API_URL}/api/v1/message/users`);
+    const res = await axios.get(`${API_URL}/api/v1/message/users`,{withCredentials:true});
     return res.data.data;
   } catch (err) {
     console.log(err);
