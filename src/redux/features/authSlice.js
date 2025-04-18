@@ -42,7 +42,7 @@ const authSlice = createSlice({
   reducers: {
     logout: state => {
       state.user = null;
-      // localStorage.removeItem('user');
+      localStorage.removeItem('user');
     },
   },
   extraReducers: builder => {
@@ -60,7 +60,7 @@ const authSlice = createSlice({
           state.user = null;
           console.log(user);
           
-          // localStorage.removeItem('user');
+          localStorage.removeItem('user');
         }
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -88,7 +88,7 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state) => {
         state.loading = false;
         state.user = null;
-        // localStorage.removeItem('user');
+        localStorage.removeItem('user');
       });
   },
 });
