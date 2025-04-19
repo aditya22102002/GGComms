@@ -246,7 +246,7 @@ function Home() {
           {/* SIDEBAR */}
           <div className='h-[95vh] bg-gray-950 border-1 border-white/10'>
             <div className='flex flex-col items-center'>
-              <img src="./friend2.svg" alt="" className={`mt-2 w-12 p-2 cursor-pointer border-1 border-white/20 rounded-2xl hover:w-13  `} onClick={() => setIsServer(false)} />
+              <img src="./friend2.svg" alt="" className={`mt-2 w-12 p-2 cursor-pointer border-1 border-white/20 rounded-xl hover:w-13  `} onClick={() => setIsServer(false)} />
               <img src="./GGcoms.svg" alt="" className='mt-2 w-12 p-1 cursor-pointer border-1 border-white/20 rounded-2xl hover:w-13' onClick={() => setIsServer(true)} />
               <img src="./GGcoms.svg" alt="" className='mt-2 w-12 p-1 cursor-pointer border-1 border-white/20 rounded-2xl hover:w-13' onClick={() => setIsServer(true)} />
               <img src="./GGcoms.svg" alt="" className='mt-2 w-12 p-1 cursor-pointer border-1 border-white/20 rounded-2xl hover:w-13' onClick={() => setIsServer(true)} />
