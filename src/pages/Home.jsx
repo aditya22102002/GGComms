@@ -7,7 +7,7 @@ import { getUser } from '../redux/features/authSlice';
 import { fetchUsers, fetchMessages, sendMessage, fetchFriends, setSelectedUserId, } from "../redux/features/useChatSlice";
 import io from "socket.io-client";
 import { addIncomingMessage } from "../redux/features/useChatSlice"
-import { getFriendRequests,accptFriendrReq,declineFriendrReq } from "../redux/features/friendRequestSlice"
+import { getFriendRequests, accptFriendrReq, declineFriendrReq } from "../redux/features/friendRequestSlice"
 import MessageBox from '../components/MessageBox';
 import { sendFriendrReq } from '../redux/features/userSlice';
 
@@ -15,6 +15,8 @@ import { sendFriendrReq } from '../redux/features/userSlice';
 const socket = io("https://ggcomms-backend.onrender.com");
 
 function Home() {
+  const messagesEndRef = useRef(null);
+
   const addFriendRef = useRef(null);
   const requestRef = useRef(null);
   const { user, loading } = useSelector(state => state.auth);
@@ -35,6 +37,13 @@ function Home() {
   const [showRequestsPopup, setShowRequestsPopup] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -121,10 +130,13 @@ function Home() {
     dispatch(fetchMessages(id));
   };
 
-  const formatDate = (dateStr) =>
-    new Date(dateStr).toLocaleDateString('en-US', {
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";  // Prevent formatting undefined/null
+    const date = new Date(dateStr);
+    return isNaN(date) ? "" : date.toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric'
     });
+  };
 
   // format time like: 14:08
 
@@ -142,7 +154,7 @@ function Home() {
         dispatch(fetchMessages(selectedUserId));
 
         // ✅ Optionally emit via socket for real-time sync
-        socket.emit("send-message", { to: selectedUserId, text: inputText });
+        // socket.emit("send-message", { to: selectedUserId, text: inputText });
 
         // Clear input
         setInputText("");
@@ -219,8 +231,8 @@ function Home() {
                   <div key={req._id} className="flex justify-between items-center border-l p-1 my-0.5">
                     <span>{req.fullname}</span>
                     <div className="flex gap-2">
-                      <button className="text-green-400 hover:text-green-600 pl-4 cursor-pointer" onClick={()=>accptFriendRequest(req._id)}>Accept</button>
-                      <button className="text-red-400 hover:text-red-600 cursor-pointer " onClick={()=>declineFriendRequest(req._id)}>Decline</button>
+                      <button className="text-green-400 hover:text-green-600 pl-4 cursor-pointer" onClick={() => accptFriendRequest(req._id)}>Accept</button>
+                      <button className="text-red-400 hover:text-red-600 cursor-pointer " onClick={() => declineFriendRequest(req._id)}>Decline</button>
                     </div>
                   </div>
                 ))}
@@ -357,12 +369,15 @@ function Home() {
                                     <div className="text-center text-gray-400 text-xs my-2">{date}</div>
 
                                     {msgs.map((msg, idx) => {
+                                      if (!msg.createdAt || !msg.senderId) return null;
                                       const isMe = msg.senderId === user._id;
-                                      return (<MessageBox msg={msg} idx={idx} isMe={isMe} />);
+                                      return (<MessageBox key={msg._id || idx} msg={msg} idx={idx} isMe={isMe} />);
                                     })}
                                   </div>
                                 ))}
+                                <div ref={messagesEndRef} />
                               </div>
+                              
                               <div className='relative top-[1%]' >
                                 <div className='flex flex-row bg-gray-700 text-white rounded-lg mx-[2%]'>
                                   <span className='pl-1'>
