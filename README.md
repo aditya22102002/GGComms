@@ -66,6 +66,3 @@ It offers a seamless user experience for both private and community-based intera
 | Vite              | Fast Build & Dev Server          |
 
 ---
-
-## 🧭 Folder Structure
-
